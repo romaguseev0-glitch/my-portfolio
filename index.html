@@ -41,7 +41,7 @@
         </div>
     </section>
 
-  <section id="projects" class="projects-section">
+    <section id="projects" class="projects-section">
         <div class="container">
             <h2 class="section-title">Мои Проекты</h2>
             
@@ -89,14 +89,38 @@
                     </div>
                 </div>
 
-            </div> </div>
-    </section>
+            </div> <form id="calc-form">
+                <h3 style="text-align: center; margin-bottom: 20px;">Калькулятор стоимости сайта 🧮</h3>
+                <div class="calc-option">
+                    <input type="checkbox" id="landing" value="15000">
+                    <label for="landing">Разработка лендинга (15 000 руб.) 🖥️</label>
+                </div>
+                <div class="calc-option">
+                    <input type="checkbox" id="multi-page" value="30000">
+                    <label for="multi-page">Многостраничный сайт (30 000 руб.) 📑</label>
+                </div>
+                <div class="calc-option">
+                    <input type="checkbox" id="mobile" value="5000">
+                    <label for="mobile">Мобильная адаптация (5 000 руб.) 📱</label>
+                </div>
+                <div class="calc-option">
+                    <input type="checkbox" id="feedback" value="3000">
+                    <label for="feedback">Форма обратной связи (3 000 руб.) 📩</label>
+                </div>
+                
+                <div class="calc-result">
+                    <h4 style="margin: 0;">Итоговая стоимость: <span id="total-price">0</span> руб.</h4>
+                </div>
+            </form>
+
+        </div> </section>
 
     <footer id="contacts" class="contacts-section">
         <h2>Контакты</h2>
         <p>Готовы начать проект? Пишите!</p>
         <a href="mailto:your@email.com" class="contact-link">your@email.com</a>
     </footer>
-<script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
