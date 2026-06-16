@@ -1,4 +1,6 @@
-/* Базовые сбросы и шрифты */
+/* =========================================
+   1. БАЗОВЫЕ СБРОСЫ И ШРИФТЫ
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +15,15 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Шапка */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* =========================================
+   2. ШАПКА И НАВИГАЦИЯ
+   ========================================= */
 .header {
     display: flex;
     justify-content: space-between;
@@ -43,7 +53,9 @@ body {
     color: #4f46e5;
 }
 
-/* Секции общие */
+/* =========================================
+   3. ОБЩИЕ СТИЛИ ДЛЯ СЕКЦИЙ
+   ========================================= */
 section {
     padding: 100px 5% 60px;
     min-height: 80vh;
@@ -57,7 +69,9 @@ h2 {
     margin-bottom: 30px;
 }
 
-/* Главный экран */
+/* =========================================
+   4. ГЛАВНЫЙ ЭКРАН (HERO)
+   ========================================= */
 .hero-section {
     background: radial-gradient(circle at top right, #1e1b4b, #0d0e15);
     text-align: center;
@@ -92,7 +106,9 @@ h2 {
     transform: translateY(-2px);
 }
 
-/* Обо мне */
+/* =========================================
+   5. СЕКЦИЯ ОБ МНЕ И НАВЫКИ
+   ========================================= */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -113,34 +129,180 @@ h2 {
     font-size: 0.9rem;
 }
 
-/* Проекты */
+/* =========================================
+   6. СЕКЦИЯ ПРОЕКТОВ И КАРТОЧЕК
+   ========================================= */
+.projects-section {
+    background-color: #0d0e15;
+    padding: 100px 5%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    color: #fff;
+    margin-bottom: 60px;
+    font-weight: 800;
+}
+
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    justify-content: center;
     gap: 30px;
+    flex-wrap: wrap;
 }
 
 .project-card {
-    background: #11131e;
-    padding: 30px;
-    border-radius: 12px;
-    border: 1px solid #1e293b;
-    transition: border-color 0.3s;
+    background-color: #1a1c29;
+    border-radius: 16px;
+    overflow: hidden;
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: 370px;
+    min-width: 290px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .project-card:hover {
-    border-color: #4f46e5;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(79, 70, 229, 0.2);
+    border-color: rgba(79, 70, 229, 0.4);
 }
 
-.project-card h3 {
-    margin-bottom: 15px;
+.project-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: #252839;
 }
 
-.project-card p {
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.project-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.project-description {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.btn-small {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4f46e5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    text-align: center;
+    flex: 1;
+}
+
+.btn-small:hover {
+    background-color: #4338ca;
+}
+
+.btn-small.btn-secondary {
+    background-color: transparent;
+    border: 1px solid rgba(148, 163, 184, 0.5);
     color: #94a3b8;
 }
 
-/* Контакты */
+.btn-small.btn-secondary:hover {
+    background-color: rgba(148, 163, 184, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* =========================================
+   7. СТИЛИ ДЛЯ ИНТЕРАКТИВНОГО КАЛЬКУЛЯТОРА
+   ========================================= */
+#calc-form {
+    background-color: #1a1c29;
+    border: 2px solid rgba(79, 70, 229, 0.3);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 500px;
+    margin: 60px auto 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.calc-option {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.05rem;
+    cursor: pointer;
+}
+
+#calc-form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4f46e5;
+    cursor: pointer;
+}
+
+#calc-form label {
+    cursor: pointer;
+    color: #e2e8f0;
+    transition: color 0.2s;
+}
+
+#calc-form label:hover {
+    color: #fff;
+}
+
+.calc-result {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    text-align: center;
+}
+
+#total-price {
+    color: #4ade80;
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+/* =========================================
+   8. СЕКЦИЯ КОНТАКТОВ
+   ========================================= */
 .contacts-section {
     text-align: center;
     padding: 100px 5%;
@@ -155,150 +317,9 @@ h2 {
     margin-top: 20px;
 }
 
-/* Адаптив под мобилки */
-@media (max-width: 768px) {
-    .header { flex-direction: column; gap: 10px; }
-    .nav a { margin: 0 10px; }
-    .hero-content h1 { font-size: 2.5rem; }
-    .about-grid { grid-template-columns: 1fr; }
-}
 /* =========================================
-   ОБНОВЛЕННЫЕ СТИЛИ ПРОЕКТОВ (как на картинке)
+   9. АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
    ========================================= */
-
-/* Контейнер для центрирования (если еще нет) */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.projects-section {
-    background-color: #0d0e15; /* Тёмный фон из базового CSS */
-    padding: 100px 5%;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.8rem;
-    color: #fff;
-    margin-bottom: 60px;
-    font-weight: 800;
-}
-
-/* Сетка проектов (Flexbox для гибкости) */
-.projects-grid {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Отступы между карточками */
-    flex-wrap: wrap; /* Чтобы переносились на мобильных */
-}
-
-/* Сама карточка */
-.project-card {
-    background-color: #1a1c29; /* Чуть светлее фона */
-    border-radius: 16px;
-    overflow: hidden; /* Чтобы картинка не вылезала за скругления */
-    flex: 1 1 calc(33.333% - 20px); /* 3 в ряд с учетом gap */
-    max-width: 370px; /* Макс ширина одной карточки */
-    min-width: 290px; /* Мин ширина до переноса */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column; /* Контент под картинкой */
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Ховер-эффект на карточку (всплывание) */
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(79, 70, 229, 0.2); /* Тень с цветом акцента */
-    border-color: rgba(79, 70, 229, 0.4);
-}
-
-/* Блок с картинкой */
-.project-image {
-    width: 100%;
-    height: 200px; /* Фиксированная высота для превью */
-    overflow: hidden;
-    background-color: #252839; /* Фон пока картинка грузится */
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Картинка заполняет блок без искажений */
-    transition: transform 0.5s ease;
-}
-
-/* Зум картинки при ховере на карточку */
-.project-card:hover .project-image img {
-    transform: scale(1.05);
-}
-
-/* Блок с текстом внутри карточки */
-.project-content {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Чтобы кнопки всегда были внизу */
-}
-
-.project-title {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 12px;
-    font-weight: 700;
-}
-
-.project-description {
-    font-size: 0.95rem;
-    color: #94a3b8; /* Серый текст */
-    margin-bottom: 25px;
-    line-height: 1.6;
-    flex-grow: 1; /* Заполняет пространство */
-}
-
-/* Кнопки в карточке */
-.project-links {
-    display: flex;
-    gap: 10px;
-    margin-top: auto; /* Прижимает кнопки к низу */
-}
-
-/* Маленькая кнопка (основная) */
-.btn-small {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4f46e5; /* Акцентный фиолетовый */
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: background 0.3s ease;
-    text-align: center;
-    flex: 1; /* Кнопки одинаковой ширины */
-}
-
-.btn-small:hover {
-    background-color: #4338ca;
-}
-
-/* Второстепенная кнопка (прозрачная) */
-.btn-small.btn-secondary {
-    background-color: transparent;
-    border: 1px solid rgba(148, 163, 184, 0.5);
-    color: #94a3b8;
-}
-
-.btn-small.btn-secondary:hover {
-    background-color: rgba(148, 163, 184, 0.1);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Адаптив для планшетов и мобильных */
 @media (max-width: 992px) {
     .projects-grid {
         gap: 20px;
@@ -306,18 +327,33 @@ h2 {
 }
 
 @media (max-width: 768px) {
+    .header { 
+        flex-direction: column; 
+        gap: 10px; 
+    }
+    .nav a { 
+        margin: 0 10px; 
+    }
+    .hero-content h1 { 
+        font-size: 2.5rem; 
+    }
+    .about-grid { 
+        grid-template-columns: 1fr; 
+    }
     .section-title {
         font-size: 2.2rem;
         margin-bottom: 40px;
     }
-    
     .projects-grid {
-        flex-direction: column; /* Карточки в один столбец */
+        flex-direction: column;
         align-items: center;
     }
-    
     .project-card {
         width: 100%;
-        max-width: 400px; /* Чуть шире на мобильных */
+        max-width: 400px;
+    }
+    #calc-form {
+        width: 100%;
+        padding: 20px;
     }
 }
