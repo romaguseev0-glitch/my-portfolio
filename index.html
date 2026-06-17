@@ -141,103 +141,117 @@
     </div>
 
     <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. ПЛАВНАЯ ПРОКРУТКА
-    const heroBtn = document.querySelector('.btn[href="#projects"]');
-    const projectsSection = document.getElementById('projects');
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. ПЛАВНАЯ ПРОКРУТКА
+        const heroBtn = document.querySelector('.btn[href="#projects"]');
+        const projectsSection = document.getElementById('projects');
 
-    if (heroBtn && projectsSection) {
-        heroBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            projectsSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        if (heroBtn && projectsSection) {
+            heroBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
-        });
-    }
+        }
 
-    // 2. ЛОГИКА КАЛЬКУЛЯТОРА
-    const calcForm = document.getElementById('calc-form');
-    const totalPriceElement = document.getElementById('total-price');
+        // 2. ЛОГИКА КАЛЬКУЛЯТОРА
+        const calcForm = document.getElementById('calc-form');
+        const totalPriceElement = document.getElementById('total-price');
 
-    if (calcForm && totalPriceElement) {
-        calcForm.addEventListener('change', () => {
-            let total = 0;
-            const checkedBoxes = calcForm.querySelectorAll('input[type="checkbox"]:checked');
-            checkedBoxes.forEach(checkbox => {
-                total += parseInt(checkbox.value, 10);
+        if (calcForm && totalPriceElement) {
+            calcForm.addEventListener('change', () => {
+                let total = 0;
+                const checkedBoxes = calcForm.querySelectorAll('input[type="checkbox"]:checked');
+                checkedBoxes.forEach(checkbox => {
+                    total += parseInt(checkbox.value, 10);
+                });
+                totalPriceElement.textContent = total.toLocaleString('ru-RU');
             });
-            totalPriceElement.textContent = total.toLocaleString('ru-RU');
-        });
-    }
+        }
 
-    // 3. ЛОГИКА ЧАТА (ОТКРЫТИЕ/ЗАКРЫТИЕ)
-    const chatBtn = document.getElementById('chat-button');
-    const chatWindow = document.getElementById('chat-window');
-    const closeChat = document.getElementById('close-chat');
+        // 3. ЛОГИКА ЧАТА (ОТКРЫТИЕ/ЗАКРЫТИЕ)
+        const chatBtn = document.getElementById('chat-button');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
 
-    if (chatBtn && chatWindow && closeChat) {
-        chatWindow.style.display = 'none';
-
-        chatBtn.addEventListener('click', () => {
-            if (chatWindow.style.display === 'none') {
-                chatWindow.style.display = 'flex';
-            } else {
-                chatWindow.style.display = 'none';
-            }
-        });
-
-        closeChat.addEventListener('click', (event) => {
-            event.stopPropagation();
+        if (chatBtn && chatWindow && closeChat) {
             chatWindow.style.display = 'none';
-        });
-    }
 
-    // 4. ОТПРАВКА СООБЩЕНИЙ В ИНТЕРФЕЙСЕ
-    const chatInput = document.getElementById('chat-input');
-    const sendMsgBtn = document.getElementById('send-msg-btn');
-    const chatMessages = document.getElementById('chat-messages');
+            chatBtn.addEventListener('click', () => {
+                if (chatWindow.style.display === 'none') {
+                    chatWindow.style.display = 'flex';
+                } else {
+                    chatWindow.style.display = 'none';
+                }
+            });
 
-    function sendMessage() {
-        const text = chatInput.value.trim();
-        if (text === '') return; // Если пусто — ничего не делаем
+            closeChat.addEventListener('click', (event) => {
+                event.stopPropagation();
+                chatWindow.style.display = 'none';
+            });
+        }
 
-        // Создаем новый блок сообщения пользователя
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('msg-user');
-        messageDiv.textContent = text;
+        // 4. ССЫЛКА НА FORMSPREE (ВСТАВЬ СВОЮ ССЫЛКУ СЮДА)
+        const FORMSPREE_URL = 'https://formspree.io/f/mykaapve';
 
-        // Добавляем в окно чата
-        chatMessages.appendChild(messageDiv);
+        // 5. БЕЗОПАСНАЯ ОТПРАВКА СООБЩЕНИЙ
+        const chatInput = document.getElementById('chat-input');
+        const sendMsgBtn = document.getElementById('send-msg-btn');
+        const chatMessages = document.getElementById('chat-messages');
 
-        // Очищаем поле ввода
-        chatInput.value = '';
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text === '') return;
 
-        // Автоматический скролл вниз к новому сообщению
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Отображаем сообщение пользователя в интерфейсе чата
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('msg-user');
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
 
-        // Имитация ответа от администратора через 1 секунду
-        setTimeout(() => {
-            const adminDiv = document.createElement('div');
-            adminDiv.classList.add('msg-admin');
-            adminDiv.textContent = 'Спасибо за сообщение! Я уже получил его в Telegram и скоро отвечу вам.';
-            chatMessages.appendChild(adminDiv);
+            chatInput.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1000);
-    }
 
-    // Отправка по клику на ракету
-    if (sendMsgBtn && chatInput && chatMessages) {
-        sendMsgBtn.addEventListener('click', sendMessage);
+            // Отправляем данные на Formspree (ключи скрыты на их стороне)
+            fetch(FORMSPREE_URL, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: text })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка сети');
+                
+                // Ответ пользователю при успешной отправке
+                setTimeout(() => {
+                    const adminDiv = document.createElement('div');
+                    adminDiv.classList.add('msg-admin');
+                    adminDiv.textContent = 'Ваше сообщение отправлено! Я отвечу вам в ближайшее время.';
+                    chatMessages.appendChild(adminDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 800);
+            })
+            .catch(error => {
+                console.error(error);
+                setTimeout(() => {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.classList.add('msg-system');
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.textContent = 'Не удалось отправить. Попробуйте позже.';
+                    chatMessages.appendChild(errorDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 500);
+            });
+        }
 
-        // Отправка по нажатию Enter в поле ввода
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    }
-});
+        if (sendMsgBtn && chatInput && chatMessages) {
+            sendMsgBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+        }
     });
     </script>
 </body>
