@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. ПЛАВНАЯ ПРОКРУТКА (Твой код)
+    // 1. ПЛАВНАЯ ПРОКРУТКА
     const heroBtn = document.querySelector('.btn[href="#projects"]');
     const projectsSection = document.getElementById('projects');
 
@@ -18,20 +18,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalPriceElement = document.getElementById('total-price');
 
     if (calcForm && totalPriceElement) {
-        // Слушаем изменения на форме (клик по чекбоксам)
         calcForm.addEventListener('change', () => {
             let total = 0;
-
-            // Находим все выбранные чекбоксы внутри формы
             const checkedBoxes = calcForm.querySelectorAll('input[type="checkbox"]:checked');
 
-            // Складываем их значения (переводя строки в числа через parseInt)
             checkedBoxes.forEach(checkbox => {
                 total += parseInt(checkbox.value, 10);
             });
 
-            // Выводим итоговую сумму на страницу
             totalPriceElement.textContent = total.toLocaleString('ru-RU');
+        });
+    }
+
+    // 3. ЛОГИКА ОТКРЫТИЯ/ЗАКРЫТИЯ ОКНА ЧАТА
+    const chatBtn = document.getElementById('chat-button');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChat = document.getElementById('close-chat');
+
+    if (chatBtn && chatWindow && closeChat) {
+        // Клик по круглой кнопке открывает/закрывает чат
+        chatBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('chat-window-hidden');
+        });
+
+        // Клик по крестику закрывает чат
+        closeChat.addEventListener('click', (event) => {
+            event.stopPropagation(); // Чтобы клик по крестику не триггерил саму кнопку под ним
+            chatWindow.classList.add('chat-window-hidden');
         });
     }
 });
