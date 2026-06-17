@@ -30,21 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. ЛОГИКА ОТКРЫТИЯ/ЗАКРЫТИЯ ОКНА ЧАТА
+  // 3. ЛОГИКА ОТКРЫТИЯ/ЗАКРЫТИЯ ОКНА ЧАТА (БЕЗОТКАЗНАЯ)
     const chatBtn = document.getElementById('chat-button');
     const chatWindow = document.getElementById('chat-window');
     const closeChat = document.getElementById('close-chat');
 
     if (chatBtn && chatWindow && closeChat) {
-        // Клик по круглой кнопке открывает/закрывает чат
-        chatBtn.addEventListener('click', () => {
-            chatWindow.classList.toggle('chat-window-hidden');
+        // Сразу принудительно задаем начальное состояние из JS
+        chatWindow.style.display = 'none';
+
+        chatBtn.addEventListener('click', (e) => {
+            if (chatWindow.style.display === 'none') {
+                chatWindow.style.display = 'flex';
+            } else {
+                chatWindow.style.display = 'none';
+            }
         });
 
-        // Клик по крестику закрывает чат
         closeChat.addEventListener('click', (event) => {
-            event.stopPropagation(); // Чтобы клик по крестику не триггерил саму кнопку под ним
-            chatWindow.classList.add('chat-window-hidden');
+            event.stopPropagation(); // Стопаем всплытие, чтобы не триггерить кнопку под окном
+            chatWindow.style.display = 'none';
         });
     }
 });
