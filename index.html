@@ -67,7 +67,7 @@
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Название Проекта Два</h3>
-                        <p class="project-description">Описание второго проекта. Например: Single Page Application, работа с API, modern интерфейс.</p>
+                        <p class="project-description">Описание второго проекта. Например: Single Page Application, работа с API, современный интерфейс.</p>
                         <div class="project-links">
                             <a href="#" class="btn-small">Демо</a>
                             <a href="#" class="btn-small btn-secondary">GitHub</a>
@@ -141,7 +141,6 @@
     </div>
 
     <script>
-<script>
     document.addEventListener('DOMContentLoaded', () => {
         // 1. ПЛАВНАЯ ПРОКРУТКА
         const heroBtn = document.querySelector('.btn[href="#projects"]');
@@ -169,32 +168,32 @@
             });
         }
 
-        // 3. ЛОГИКА ЧАТА (ОТКРЫТИЕ/ЗАКРЫТИЕ)
+        // 3. ЛОГИКА ЧАТА (ОТКРЫТИЕ/ЗАКРЫТИЕ ЧЕРЕЗ КЛАССЫ И IMPORTANT)
         const chatBtn = document.getElementById('chat-button');
         const chatWindow = document.getElementById('chat-window');
         const closeChat = document.getElementById('close-chat');
 
         if (chatBtn && chatWindow && closeChat) {
-            chatWindow.style.display = 'none';
-
             chatBtn.addEventListener('click', () => {
-                if (chatWindow.style.display === 'none') {
-                    chatWindow.style.display = 'flex';
+                if (chatWindow.classList.contains('chat-window-hidden')) {
+                    chatWindow.classList.remove('chat-window-hidden');
+                    chatWindow.style.setProperty('display', 'flex', 'important');
                 } else {
-                    chatWindow.style.display = 'none';
+                    chatWindow.classList.add('chat-window-hidden');
+                    chatWindow.style.setProperty('display', 'none', 'important');
                 }
             });
 
             closeChat.addEventListener('click', (event) => {
                 event.stopPropagation();
-                chatWindow.style.display = 'none';
+                chatWindow.classList.add('chat-window-hidden');
+                chatWindow.style.setProperty('display', 'none', 'important');
             });
         }
 
-        // 4. ССЫЛКА НА FORMSPREE (ВСТАВЬ СВОЮ ССЫЛКУ СЮДА)
+        // 4. БЕЗОПАСНАЯ ОТПРАВКА НА FORMSPREE
         const FORMSPREE_URL = 'https://formspree.io/f/mykaapve';
 
-        // 5. БЕЗОПАСНАЯ ОТПРАВКА СООБЩЕНИЙ
         const chatInput = document.getElementById('chat-input');
         const sendMsgBtn = document.getElementById('send-msg-btn');
         const chatMessages = document.getElementById('chat-messages');
@@ -203,7 +202,6 @@
             const text = chatInput.value.trim();
             if (text === '') return;
 
-            // Отображаем сообщение пользователя в интерфейсе чата
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('msg-user');
             messageDiv.textContent = text;
@@ -212,7 +210,6 @@
             chatInput.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Отправляем данные на Formspree (ключи скрыты на их стороне)
             fetch(FORMSPREE_URL, {
                 method: 'POST',
                 headers: {
@@ -222,9 +219,7 @@
                 body: JSON.stringify({ message: text })
             })
             .then(response => {
-                if (!response.ok) throw new Error('Ошибка сети');
-                
-                // Ответ пользователю при успешной отправке
+                if (!response.ok) throw new Error('Ошибка');
                 setTimeout(() => {
                     const adminDiv = document.createElement('div');
                     adminDiv.classList.add('msg-admin');
@@ -239,7 +234,7 @@
                     const errorDiv = document.createElement('div');
                     errorDiv.classList.add('msg-system');
                     errorDiv.style.color = '#ef4444';
-                    errorDiv.textContent = 'Не удалось отправить. Попробуйте позже.';
+                    errorDiv.textContent = 'Ошибка сервера. Попробуйте позже.';
                     chatMessages.appendChild(errorDiv);
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 }, 500);
