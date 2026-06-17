@@ -171,27 +171,31 @@
             });
         }
 
-        // 3. БЕЗОТКАЗНАЯ ЛОГИКА ЧАТА (ЧЕРЕЗ ИНЛАЙН СТИЛИ)
-        const chatBtn = document.getElementById('chat-button');
-        const chatWindow = document.getElementById('chat-window');
-        const closeChat = document.getElementById('close-chat');
+// 3. БЕЗОТКАЗНАЯ ЛОГИКА ЧАТА (ИСПРАВЛЕННАЯ)
+const chatBtn = document.getElementById('chat-button');
+const chatWindow = document.getElementById('chat-window');
+const closeChat = document.getElementById('close-chat');
 
-        if (chatBtn && chatWindow && closeChat) {
-            chatWindow.style.display = 'none';
-
-            chatBtn.addEventListener('click', () => {
-                if (chatWindow.style.display === 'none') {
-                    chatWindow.style.display = 'flex';
-                } else {
-                    chatWindow.style.display = 'none';
-                }
-            });
-
-            closeChat.addEventListener('click', (event) => {
-                event.stopPropagation();
-                chatWindow.style.display = 'none';
-            });
+if (chatBtn && chatWindow && closeChat) {
+    // По умолчанию окно скрыто (через класс в HTML)
+    
+    chatBtn.addEventListener('click', () => {
+        // Если класс скрытия есть — удаляем его (окно появится), если нет — добавляем (окно скроется)
+        if (chatWindow.classList.contains('chat-window-hidden')) {
+            chatWindow.classList.remove('chat-window-hidden');
+            chatWindow.style.setProperty('display', 'flex', 'important'); // Принудительно ставим flex
+        } else {
+            chatWindow.classList.add('chat-window-hidden');
+            chatWindow.style.setProperty('display', 'none', 'important'); // Принудительно скрываем
         }
+    });
+
+    closeChat.addEventListener('click', (event) => {
+        event.stopPropagation();
+        chatWindow.classList.add('chat-window-hidden');
+        chatWindow.style.setProperty('display', 'none', 'important');
+    });
+}
     });
     </script>
 </body>
