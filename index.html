@@ -67,7 +67,7 @@
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Название Проекта Два</h3>
-                        <p class="project-description">Описание второго проекта. Например: Single Page Application, работа с API, современный интерфейс.</p>
+                        <p class="project-description">Описание второго проекта. Например: Single Page Application, работа с API, modern интерфейс.</p>
                         <div class="project-links">
                             <a href="#" class="btn-small">Демо</a>
                             <a href="#" class="btn-small btn-secondary">GitHub</a>
@@ -89,7 +89,9 @@
                     </div>
                 </div>
 
-            </div> <form id="calc-form">
+            </div>
+
+            <form id="calc-form">
                 <h3 style="text-align: center; margin-bottom: 20px;">Калькулятор стоимости сайта 🧮</h3>
                 <div class="calc-option">
                     <input type="checkbox" id="landing" value="15000">
@@ -113,7 +115,8 @@
                 </div>
             </form>
 
-        </div> </section>
+        </div>
+    </section>
 
     <footer id="contacts" class="contacts-section">
         <h2>Контакты</h2>
@@ -121,21 +124,75 @@
         <a href="mailto:your@email.com" class="contact-link">your@email.com</a>
     </footer>
 
-    <script src="script.js"></script>
-<div id="chat-button" class="chat-btn-circle">💬</div>
+    <div id="chat-button" class="chat-btn-circle">💬</div>
 
-<div id="chat-window" class="chat-window-hidden">
-    <div class="chat-header">
-        <h4>DevSigner Поддержка ⚡</h4>
-        <span id="close-chat">&times;</span>
+    <div id="chat-window" class="chat-window-hidden">
+        <div class="chat-header">
+            <h4>DevSigner Поддержка ⚡</h4>
+            <span id="close-chat">&times;</span>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="msg-system">Привет! Напиши свой вопрос, и я отвечу тебе прямо здесь.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Введите сообщение...">
+            <button id="send-msg-btn">🚀</button>
+        </div>
     </div>
-    <div id="chat-messages" class="chat-messages">
-        <div class="msg-system">Привет! Напиши свой вопрос, и я отвечу тебе прямо здесь.</div>
-    </div>
-    <div class="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Введите сообщение...">
-        <button id="send-msg-btn">🚀</button>
-    </div>
-</div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. ПЛАВНАЯ ПРОКРУТКА
+        const heroBtn = document.querySelector('.btn[href="#projects"]');
+        const projectsSection = document.getElementById('projects');
+
+        if (heroBtn && projectsSection) {
+            heroBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                projectsSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        }
+
+        // 2. ЛОГИКА КАЛЬКУЛЯТОРА
+        const calcForm = document.getElementById('calc-form');
+        const totalPriceElement = document.getElementById('total-price');
+
+        if (calcForm && totalPriceElement) {
+            calcForm.addEventListener('change', () => {
+                let total = 0;
+                const checkedBoxes = calcForm.querySelectorAll('input[type="checkbox"]:checked');
+                checkedBoxes.forEach(checkbox => {
+                    total += parseInt(checkbox.value, 10);
+                });
+                totalPriceElement.textContent = total.toLocaleString('ru-RU');
+            });
+        }
+
+        // 3. БЕЗОТКАЗНАЯ ЛОГИКА ЧАТА (ЧЕРЕЗ ИНЛАЙН СТИЛИ)
+        const chatBtn = document.getElementById('chat-button');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+
+        if (chatBtn && chatWindow && closeChat) {
+            chatWindow.style.display = 'none';
+
+            chatBtn.addEventListener('click', () => {
+                if (chatWindow.style.display === 'none') {
+                    chatWindow.style.display = 'flex';
+                } else {
+                    chatWindow.style.display = 'none';
+                }
+            });
+
+            closeChat.addEventListener('click', (event) => {
+                event.stopPropagation();
+                chatWindow.style.display = 'none';
+            });
+        }
+    });
+    </script>
 </body>
 </html>
